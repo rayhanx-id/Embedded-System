@@ -26,15 +26,24 @@ void loop() {
   int distance = duration * 0.034 / 2;
   lcd.clear();
   
-  if (distance >= 10 && distance < 30) { 
-    lcd.print("Banjir Terdeteksi \n Rendah!");
+  if (distance >= 2 && distance < 30) { 
+    lcd.setCursor(0,0);
+    lcd.print("Banjir Terdeteksi");
+    lcd.setCursor(0,1);
+    lcd.print("Rendah!!!");
   } else if (distance >= 30 && distance < 60) {
-    lcd.print("Banjir Terdeteksi \n Normal!"); 
+    lcd.setCursor(0,0);
+    lcd.print("Banjir Terdeteksi");
+    lcd.setCursor(0,1);
+    lcd.print("Normal!!!");
   } else if (distance >= 60) {
-    lcd.print("Banjir Terdeteksi \n Tinggi!");
+    lcd.setCursor(0,0);
+    lcd.print("Banjir Terdeteksi");
+    lcd.setCursor(0,1);
+    lcd.print("Tinggi!!!");
   } else {
     lcd.print("Tidak Ada Banjir");
   }
   
-  delay(1000); // Tunggu sebentar sebelum membaca lagi
+  delay(3000);
 }
