@@ -28,33 +28,44 @@ void loop() {
   int distance = duration * 0.034 / 2;
   lcd.clear();
   
-  if (distance >= 2 && distance < 30) { 
-    lcd.setCursor(0,0);
-    lcd.print("Banjir Terdeteksi");
-    lcd.setCursor(0,1);
-    lcd.print("Rendah!!!");
-    noTone(buzzer); // Turn off the buzzer
+  int minDistance = 0;   
+  int maxDistance = 300; 
+  
+  // Calculate the percentage of flood height
+  int floodPercentage = map(distance, minDistance, maxDistance, 100, 0); 
 
-  } else if (distance >= 30 && distance < 60) {
+  if (distance >= 0 && distance <= 30) { 
     lcd.setCursor(0,0);
-    lcd.print("Banjir Terdeteksi");
+    lcd.print("Banjir Sangat Tinggi:");
     lcd.setCursor(0,1);
-    lcd.print("Normal!!!");
-    noTone(buzzer); // Turn off the buzzer
-
-  } else if (distance >= 60) {
+    lcd.print(floodPercentage);
+    lcd.print("%");
+    tone(buzzer, 1000, 1000); // Nada 1000 Hz selama 1 detik
+  } else if (distance >= 31 && distance <= 100) {
     lcd.setCursor(0,0);
-    lcd.print("Banjir Terdeteksi");
+    lcd.print("Banjir Tinggi:");
     lcd.setCursor(0,1);
-    lcd.print("Tinggi!!!");
-    tone(buzzer, 500);
-    delay(1000);
-    tone(buzzer, 650);
-    delay(1000); 
-    
+    lcd.print(floodPercentage);
+    lcd.print("%");
+    tone(buzzer, 800, 1000); // Nada 800 Hz selama 1 detik
+  } else if (distance >= 101 && distance <= 200) {
+    lcd.setCursor(0,0);
+    lcd.print("Banjir Sedang:");
+    lcd.setCursor(0,1);
+    lcd.print(floodPercentage);
+    lcd.print("%");
+    tone(buzzer, 600, 1000); // Nada 600 Hz selama 1 detik
+  } else if (distance >= 201 && distance <= 300) {
+    lcd.setCursor(0,0);
+    lcd.print("Banjir Ringan:");
+    lcd.setCursor(0,1);
+    lcd.print(floodPercentage);
+    lcd.print("%");
+    tone(buzzer, 400, 1000); // Nada 400 Hz selama 1 detik
   } else {
     lcd.print("Tidak Ada Banjir");
   }
   
-  delay(1000);
+  delay(2000);
+  noTone(buzzer); // Mematikan buzzer setelah 1 detik
 }
